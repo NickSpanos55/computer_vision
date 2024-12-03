@@ -4,7 +4,7 @@
 
 To detect skin regions, RGB images are converted into the YCbCr color space, retaining only the Cb and Cr components. This approach isolates the actual skin color, removing the Y component, which represents brightness and is influenced by lighting conditions.
 
-![YCbCr Color Space Diagram](path-to-image.png)
+![YCbCr Color Space Diagram](./assets/Screenshot_9.jpg)
 
 After calculating the mean and covariance matrix of the Cb and Cr components from a training image, the value of each pixel in the video is evaluated against a Gaussian distribution.
 
