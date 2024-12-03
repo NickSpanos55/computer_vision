@@ -4,7 +4,7 @@
 
 To detect skin regions, RGB images are converted into the YCbCr color space, retaining only the Cb and Cr components. This approach isolates the actual skin color, removing the Y component, which represents brightness and is influenced by lighting conditions.
 
-<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 100%;">
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
   <img src="./assets/Screenshot_9.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
   <img src="./assets/Screenshot_10.jpg" alt="Training Image with Highlighted Skin Regions" style="width: 20%;"/>
 </div>
