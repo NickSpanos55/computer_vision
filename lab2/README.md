@@ -2,25 +2,39 @@
 
 ## Skin Detection Using YCbCr Color Space
 
-To detect skin regions, RGB images are converted into the YCbCr color space, retaining only the Cb and Cr components. This approach isolates the actual skin color, removing the Y component, which represents brightness and is influenced by lighting conditions.
+To detect skin regions, we initially convert RGB images to the YCbCr color space, retaining only the Cb (chrominance blue) and Cr (chrominance red) components. This step isolates the true color information of the skin while discarding the Y (luminance) component, which varies depending on lighting conditions. This transformation reduces the influence of lighting and emphasizes chromatic consistency in skin tones.
 
 <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
   <img src="./assets/Screenshot_1.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
 </div>
 
-After calculating the mean and covariance matrix of the Cb and Cr components from a training image, the value of each pixel in the video is evaluated against a Gaussian distribution.
+Next, using the training image, we compute the mean values of the Cb and Cr components and their covariance matrix. For each pixel in the video frames, we calculate its likelihood value using the Gaussian distribution parameterized by the computed statistics. This probabilistic approach effectively identifies skin-like regions in the images, as the Gaussian model captures the variability of skin tones.
 
 <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
   <img src="./assets/Screenshot_2.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
 </div>
 
-Subsequently, the pixel distribution is thresholded, keeping only those with values greater than 0.23. Morphological operations, **Opening** with a kernel size of 4x4 pixels and **Closing** with a kernel size of 10x10 pixels, are applied. These operations refine the detected regions, especially in distinguishing facial areas from hands.
+To refine the detection, we apply a thresholding operation. Pixels with a likelihood value greater than 0.23 are retained, producing binary masks highlighting the detected skin regions.
+
+Following thresholding, morphological operations are applied to clean and structure the binary masks:
+
+Opening (using a 4x4 pixel kernel): Removes small noise and disconnects unrelated small regions.
+Closing (using a 10x10 pixel kernel): Bridges small gaps and fills holes within detected skin regions.
 
 <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
   <img src="./assets/Screenshot_3.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
 </div>
 
-Using Python commands `label` and `np.unique`, connected components in the image are identified. The three largest connected components (face and two hands) are retained, and bounding boxes enclosing them are drawn.
+Through experimentation, it was observed that kernel sizes significantly affect the separation of face and hands, especially when the hands are close to the face (e.g., for sign language interpreters). The chosen sizes provided optimal segmentation for most scenarios.
+
+Using Python functions like label and np.unique, we identify connected components in the binary masks. From these, the three largest connected components (typically representing the face and both hands) are retained.
+
+
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
+  <img src="./assets/Screenshot_4.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+</div>
+
+Finally, bounding boxes are calculated by enclosing the identified components within rectangles, allowing us to capture the positions of the face and hands effectively.
 
 <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
   <img src="./assets/Screenshot_5.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
@@ -32,29 +46,166 @@ Using Python commands `label` and `np.unique`, connected components in the image
 
 ## Lucas-Kanade Algorithm
 
-The Lucas-Kanade algorithm is widely used for optical flow estimation. It applies the least-squares method and computes the displacement vector \( u \) at each image pixel.
+The Lucas-Kanade algorithm is one of the most widely used methods for calculating optical flow. It assumes **brightness constancy**, **small motion**, and **spatial coherence**, which means:
+
+1. The brightness of a point in an image remains constant between consecutive frames.
+2. The motion between frames is small, allowing the use of first-order Taylor expansion for approximations.
+3. Pixels in a small neighborhood move in a similar manner.
+
+These assumptions lead to the **optical flow constraint equation**:
+
+**\[
+I_x u + I_y v + I_t = 0
+\]**
+
+Where:
+- \( I_x, I_y \): Spatial derivatives of the image intensity.
+- \( I_t \): Temporal derivative of the image intensity.
+- \( u, v \): Components of the optical flow vector.
+
+The goal is to solve for \( u \) and \( v \), which represent the motion in the \( x \)- and \( y \)-directions.
 
 ![Lucas-Kanade Algorithm Flowchart](path-to-image.png)
 
-Initially, the image's partial derivatives are calculated using `np.gradient`. Displaced images are then computed via `map_coordinates`, and a Gaussian filter (of scale \( \rho \)) is applied to smooth elements of the matrices.
+# 1.2) Lucas-Kanade Algorithm for Optical Flow
 
-![Partial Derivatives Visualization](path-to-image.png)
+The Lucas-Kanade algorithm is a widely used method for optical flow computation based on the **least-squares principle**. Its goal is to estimate the motion vector \( \mathbf{u} = (u, v) \) at each pixel of an image sequence by solving for the best-fit motion consistent with the intensity changes.
 
-### Bounding Box Displacement Calculation
+## **Theoretical Basis**
 
-To compute the displacement vectors for a bounding box, the function `displ(d_x, d_y, threshold)` is implemented. It filters optical flow vectors based on a threshold of their energy \( E_{max} \).
+The algorithm operates under the **optical flow constraint equation**:
 
-![Bounding Box Displacement Comparison](path-to-image.png)
+\[
+I_x u + I_y v + I_t = 0
+\]
 
-### Handling Large Movements
+Where:
+- \( I_x, I_y \) are the spatial intensity gradients in the \( x \)- and \( y \)-directions.
+- \( I_t \) is the temporal intensity gradient.
+- \( u, v \) represent the horizontal and vertical components of the flow vector \( \mathbf{u} \).
 
-The single-scale Lucas-Kanade algorithm struggles with large displacements (e.g., >1–2 pixels). To address this, a multi-scale implementation was developed. The input images are downscaled multiple times, forming a Gaussian pyramid.
+### **Assumptions**
+1. The intensity of a moving object remains constant over time: \( I(x, y, t) = I(x + u, y + v, t+1) \).
+2. Small motion approximation: Higher-order terms in the Taylor expansion of the intensity function are ignored.
+3. Local spatial coherence: Neighboring pixels have similar motion.
 
-![Gaussian Pyramid Diagram](path-to-image.png)
+### **Least-Squares Formulation**
+To estimate \( \mathbf{u} \) for each pixel, Lucas-Kanade uses a local window \( W \) (e.g., \( 5 \times 5 \)) and minimizes the squared error of the constraint equation for all pixels in \( W \):
 
-The multi-scale method consistently outperformed the single-scale version, especially in hand-tracking scenarios.
+\[
+E(u, v) = \sum_{(x_i, y_i) \in W} \left( I_x(x_i, y_i) u + I_y(x_i, y_i) v + I_t(x_i, y_i) \right)^2
+\]
 
-![Single-Scale vs Multi-Scale Results](path-to-image.png)
+This leads to solving the following linear system:
+
+\[
+\begin{bmatrix}
+\sum I_x^2 & \sum I_x I_y \\
+\sum I_x I_y & \sum I_y^2
+\end{bmatrix}
+\begin{bmatrix}
+u \\
+v
+\end{bmatrix}
+=
+\begin{bmatrix}
+-\sum I_x I_t \\
+-\sum I_y I_t
+\end{bmatrix}
+\]
+
+Or in matrix form:
+\[
+A \cdot \mathbf{u} = \mathbf{b}
+\]
+
+Where:
+- \( A \) is the \( 2 \times 2 \) structure tensor:
+\[
+A =
+\begin{bmatrix}
+\sum I_x^2 & \sum I_x I_y \\
+\sum I_x I_y & \sum I_y^2
+\end{bmatrix}
+\]
+- \( \mathbf{b} = \begin{bmatrix} -\sum I_x I_t \\ -\sum I_y I_t \end{bmatrix} \)
+
+The solution for \( \mathbf{u} \) is given by:
+\[
+\mathbf{u} = A^{-1} \mathbf{b}
+\]
+
+### **Implementation Details**
+1. **Gradient Calculation**:
+   - The partial derivatives \( I_x, I_y, I_t \) are computed using numerical methods. In Python, we used `np.gradient` to obtain \( I_x \) and \( I_y \), and temporal differences for \( I_t \).
+
+2. **Isotropic Gaussian Filtering**:	
+   - To improve robustness against noise, a Gaussian filter (scale \( \rho \)) is applied to the elements of \( A \) and \( \mathbf{b} \). This was implemented using a Gaussian kernel.
+
+3. **Iterative Updates**:
+   - For each pixel, the flow vector \( \mathbf{d} \) is updated iteratively:
+     \[
+     \mathbf{d}_{i+1} = \mathbf{d}_i + \mathbf{u}
+     \]
+   - The stopping criterion is based on the **L2 norm** of \( \mathbf{u} \): If \( \| \mathbf{u} \|_2 < 0.02 \), the iterations stop. Otherwise, the algorithm continues for a maximum of 300 iterations.
+### **Observations**
+- With parameters \( \epsilon = 0.005 \) and \( \rho = 2 \), results were stable. However, for very small \( \epsilon \) (e.g., \( 0.001 \)), the algorithm produced erroneous flow with unnatural patterns in some cases.
+- The algorithm struggled to converge within the maximum iterations for high-motion areas, like hands in images.
+
+---
+
+## **1.2.2) Optical Flow Displacement for Bounding Boxes**
+
+To compute the displacement vector for a region of interest (ROI) such as a bounding box, we implemented the function:
+
+displ(d_x, d_y, threshold)
+
+This function processes optical flow vectors \(\mathbf{d}_x, \mathbf{d}_y \) within the ROI using the following steps:
+1. **Energy-Based Filtering**:
+   - Compute the maximum flow energy \( E_{max} \) as:
+     \[
+     E = \sqrt{d_x^2 + d_y^2}, \quad E_{max} = \max(E)
+     \]
+   - Retain vectors satisfying \( E \geq \text{threshold} \cdot E_{max} \).
+
+2. **Averaging**:
+   - Compute the mean of the retained vectors to represent the displacement for the entire bounding box.
+
+For \( \text{threshold} = 0.5 \) (50%), the results were satisfactory.
+
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
+  <img src="./assets/Screenshot_6.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+  <img src="./assets/Screenshot_7.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+  <img src="./assets/Screenshot_8.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+</div>
+
+### **Multiscale Lucas-Kanade**
+
+To address limitations in large-motion scenarios (e.g., motion > 1-2 pixels), we extended the algorithm to work on multiple scales. The implementation involved the function:
+
+multi_lk(I1, I2, features, rho, epsilon, dx_0, dy_0, Num)
+### Procedure
+
+#### Gaussian Pyramids:
+- Downsample the images \( I_1 \) and \( I_2 \) \( Num \) times, each time filtering with a Gaussian kernel (3 pixels wide) to reduce spectral aliasing.
+
+#### Iterative LK at Each Scale:
+- Start with the smallest scale (coarsest resolution) and apply Lucas-Kanade using \( d_x, d_y \) as the initial conditions.
+- At each finer scale, the computed displacement is doubled and used as the initial condition for the next level.
+
+### Advantages
+- **Improved Convergence**: The multiscale approach allows better handling of large motions by focusing on coarse details first.
+- **Faster Execution**: Since each scale starts with optimized initial conditions, convergence is faster compared to single-scale LK.
+- **Higher Accuracy**: The algorithm is more resilient to distortions in flow caused by large displacements.
+
+### Results
+The multiscale Lucas-Kanade significantly outperformed the single-scale version, especially in high-motion areas like hands, where single-scale LK failed.
+
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
+  <img src="./assets/Screenshot_9.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+  <img src="./assets/Screenshot_10.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+  <img src="./assets/Screenshot_11.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+</div>
 
 ---
 
