@@ -84,8 +84,10 @@ $$
 \begin{bmatrix}
 u \\
 v
-\end{bmatrix} = 
+\end{bmatrix} 
+$$
 
+$$
 \begin{bmatrix}
 -\sum I_x I_t \\
 -\sum I_y I_t
@@ -95,11 +97,9 @@ $$
 
 Or in matrix form:
 
-
 $$
 A \cdot \mathbf{u} = \mathbf{b}
 $$
-
 
 Where:
 - \( A \) is the \( 2 \times 2 \) structure tensor
