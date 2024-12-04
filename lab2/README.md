@@ -98,7 +98,7 @@ A \cdot \mathbf{u} = \mathbf{b}
 $$
 
 Where:
-- \( A \) is the \( 2 \times 2 \) structure tensor
+- $$\( A \)$$ is the $$\( 2 \times 2 \)$$ structure tensor
 
 $$
 A =
@@ -108,9 +108,9 @@ A =
 \end{bmatrix}
 $$
 
-- \( \mathbf{b} = \begin{bmatrix} -\sum I_x I_t \\ -\sum I_y I_t \end{bmatrix} \)
+- $$\( \mathbf{b} = \begin{bmatrix} -\sum I_x I_t \\ -\sum I_y I_t \end{bmatrix} \)$$
 
-The solution for \( \mathbf{u} \) is given by:
+The solution for $$\( \mathbf{u} \)$$ is given by:
 
 $$
 \mathbf{u} = A^{-1} \mathbf{b}
@@ -118,19 +118,19 @@ $$
 
 ### **Implementation Details**
 1. **Gradient Calculation**:
-   - The partial derivatives \( I_x, I_y, I_t \) are computed using numerical methods. In Python, we used `np.gradient` to obtain \( I_x \) and \( I_y \), and temporal differences for \( I_t \).
+   - The partial derivatives $$\( I_x, I_y, I_t \)$$ are computed using numerical methods. In Python, we used `np.gradient` to obtain $$\( I_x \) and \( I_y \)$$, and temporal differences for $$\( I_t \)$$.
 
 2. **Isotropic Gaussian Filtering**:	
-   - To improve robustness against noise, a Gaussian filter (scale \( \rho \)) is applied to the elements of \( A \) and \( \mathbf{b} \). This was implemented using a Gaussian kernel.
+   - To improve robustness against noise, a Gaussian filter (scale $$\( \rho \)$$) is applied to the elements of $$\( A \)$$ and $$\( \mathbf{b} \)$$. This was implemented using a Gaussian kernel.
 
 3. **Iterative Updates**:
-   - For each pixel, the flow vector \( \mathbf{d} \) is updated iteratively:
+   - For each pixel, the flow vector $$\( \mathbf{d} \)$$ is updated iteratively:
 
    $$
-   \mathbf{d}_{i+1} = \mathbf{d}_i + \mathbf{u}
+   \mathbf{d_{i+1}} = \mathbf{d_i} + \mathbf{u}
    $$
 
-   - The stopping criterion is based on the **L2 norm** of \( \mathbf{u} \): If \( \| \mathbf{u} \|_2 < 0.02 \), the iterations stop. Otherwise, the algorithm continues for a maximum of 300 iterations.
+   - The stopping criterion is based on the **L2 norm** of $$\( \mathbf{u} \)$$: If $$\( \| \mathbf{u} \|2 < 0.02 \)$$, the iterations stop. Otherwise, the algorithm continues for a maximum of 300 iterations.
 
 ### **Observations**
 - With parameters \( \epsilon = 0.005 \) and \( \rho = 2 \), results were stable. However, for very small \( \epsilon \) (e.g., \( 0.001 \)), the algorithm produced erroneous flow with unnatural patterns in some cases.
@@ -142,9 +142,9 @@ $$
 
 To compute the displacement vector for a region of interest (ROI) such as a bounding box, we implemented the function:
 
-`displ(d_x, d_y, threshold)`
+displ(d_x, d_y, threshold)
 
-This function processes optical flow vectors \(\mathbf{d}_x, \mathbf{d}_y \) within the ROI using the following steps:
+This function processes optical flow vectors $$(\mathbf{d_x}, \mathbf{d_y} \)$$ within the ROI using the following steps:
 
 1. **Energy-Based Filtering**:
    - Compute the maximum flow energy \( E_{max} \) as:
@@ -158,7 +158,7 @@ This function processes optical flow vectors \(\mathbf{d}_x, \mathbf{d}_y \) wit
 2. **Averaging**:
    - Compute the mean of the retained vectors to represent the displacement for the entire bounding box.
 
-For \( \text{threshold} = 0.5 \) (50%), the results were satisfactory.
+For $$\( \text{threshold} = 0.5 \)$$ (50%), the results were satisfactory.
 
 <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
   <img src="./assets/Screenshot_6.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
