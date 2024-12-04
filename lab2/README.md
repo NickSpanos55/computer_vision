@@ -84,16 +84,12 @@ $$
 \begin{bmatrix}
 u \\
 v
-\end{bmatrix} 
-$$
-
-$$
+\end{bmatrix} = 
 \begin{bmatrix}
 -\sum I_x I_t \\
 -\sum I_y I_t
 \end{bmatrix}
 $$
-
 
 Or in matrix form:
 
