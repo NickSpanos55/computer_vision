@@ -108,7 +108,7 @@ A =
 \end{bmatrix}
 $$
 
-- $$\( \mathbf{b} = \begin{bmatrix} -\sum I_x I_t \\ -\sum I_y I_t \end{bmatrix} \)$$
+$$\( \mathbf{b} = \begin{bmatrix} -\sum I_x I_t \\ -\sum I_y I_t \end{bmatrix} \)$$
 
 The solution for $$\( \mathbf{u} \)$$ is given by:
 
@@ -138,18 +138,16 @@ $$
 
 To compute the displacement vector for a region of interest (ROI) such as a bounding box, we implemented the function:
 
-displ(d_x, d_y, threshold)
+`displ(d_x, d_y, threshold)`
 
 This function processes optical flow vectors $$(\mathbf{d_x}, \mathbf{d_y} \)$$ within the ROI using the following steps:
 
 1. **Energy-Based Filtering**:
    - Compute the maximum flow energy \( E_{max} \) as:
 
-   $$
-   E = \sqrt{d_x^2 + d_y^2}, \quad E_{max} = \max(E)
-   $$
+   $$E = \sqrt{d_x^2 + d_y^2}, \quad E_{max} = \max(E)$$
 
-   - Retain vectors satisfying \( E \geq \text{threshold} \cdot E_{max} \).
+   - Retain vectors satisfying $$\( E \geq \text{threshold} \cdot E_{max} \)$$.
 
 2. **Averaging**:
    - Compute the mean of the retained vectors to represent the displacement for the entire bounding box.
@@ -196,7 +194,7 @@ The multiscale Lucas-Kanade significantly outperformed the single-scale version,
 
 # Harris and Gabor Feature Detectors
 
-### 2.1.1) Initial Computation of L Matrices
+### Initial Computation of L Matrices
 
 To begin, we compute the $$\( L \)$$ matrices by performing one-dimensional convolution along the first two spatial dimensions of the video frames with a Gaussian kernel of standard deviation $$\( \sigma \)$$. For the temporal dimension, we convolve with a Gaussian kernel of standard deviation $$\( \tau \)$$. 
 
@@ -258,7 +256,7 @@ These differences stem from the distinct criteria maximized by each detector, wh
 
 ---
 
-### 2.2) Descriptors Implementation
+### Descriptors Implementation
 
 We implemented the `Descriptors` function, which returns **HOG (Histogram of Oriented Gradients)** and **HOF (Histogram of Optical Flow)** descriptors:
 
@@ -270,7 +268,7 @@ We implemented the `Descriptors` function, which returns **HOG (Histogram of Ori
 
 ---
 
-### 2.3) SVM Training and Results
+### SVM Training and Results
 
 After computing the directional histograms, we trained an SVM classifier for each combination of detectors and descriptors. Using the provided text file, we split the videos into training and testing sets, yielding the following results:
 
