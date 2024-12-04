@@ -46,7 +46,6 @@ Finally, bounding boxes are calculated by enclosing the identified components wi
 
 ## Lucas-Kanade Algorithm
 
-
 The Lucas-Kanade algorithm is a widely used method for optical flow computation based on the **least-squares principle**. Its goal is to estimate the motion vector \( \mathbf{u} = (u, v) \) at each pixel of an image sequence by solving for the best-fit motion consistent with the intensity changes.
 
 ## **Theoretical Basis**
@@ -93,12 +92,14 @@ v
 \]
 
 Or in matrix form:
+
 \[
 A \cdot \mathbf{u} = \mathbf{b}
 \]
 
 Where:
 - \( A \) is the \( 2 \times 2 \) structure tensor:
+
 \[
 A =
 \begin{bmatrix}
@@ -106,9 +107,11 @@ A =
 \sum I_x I_y & \sum I_y^2
 \end{bmatrix}
 \]
+
 - \( \mathbf{b} = \begin{bmatrix} -\sum I_x I_t \\ -\sum I_y I_t \end{bmatrix} \)
 
 The solution for \( \mathbf{u} \) is given by:
+
 \[
 \mathbf{u} = A^{-1} \mathbf{b}
 \]
@@ -122,10 +125,11 @@ The solution for \( \mathbf{u} \) is given by:
 
 3. **Iterative Updates**:
    - For each pixel, the flow vector \( \mathbf{d} \) is updated iteratively:
-     \[
-     \mathbf{d}_{i+1} = \mathbf{d}_i + \mathbf{u}
-     \]
-   - The stopping criterion is based on the **L2 norm** of \( \mathbf{u} \): If \( \| \mathbf{u} \|_2 < 0.02 \), the iterations stop. Otherwise, the algorithm continues for a maximum of 300 iterations.
+
+   \[
+   \mathbf{d}_{i+1} = \mathbf{d}_i + \mathbf{u}
+   \]
+   - The stopping criterion is based on the **L2 norm** of \( \mathbf{u} \): If \( \| \mathbf{u} \|_2 < 0.02 \),the iterations stop. Otherwise, the algorithm continues for a maximum of 300 iterations.
 ### **Observations**
 - With parameters \( \epsilon = 0.005 \) and \( \rho = 2 \), results were stable. However, for very small \( \epsilon \) (e.g., \( 0.001 \)), the algorithm produced erroneous flow with unnatural patterns in some cases.
 - The algorithm struggled to converge within the maximum iterations for high-motion areas, like hands in images.
@@ -141,9 +145,11 @@ displ(d_x, d_y, threshold)
 This function processes optical flow vectors \(\mathbf{d}_x, \mathbf{d}_y \) within the ROI using the following steps:
 1. **Energy-Based Filtering**:
    - Compute the maximum flow energy \( E_{max} \) as:
-     \[
-     E = \sqrt{d_x^2 + d_y^2}, \quad E_{max} = \max(E)
-     \]
+
+   \[
+   E = \sqrt{d_x^2 + d_y^2}, \quad E_{max} = \max(E)
+   \]
+
    - Retain vectors satisfying \( E \geq \text{threshold} \cdot E_{max} \).
 
 2. **Averaging**:
@@ -162,6 +168,7 @@ For \( \text{threshold} = 0.5 \) (50%), the results were satisfactory.
 To address limitations in large-motion scenarios (e.g., motion > 1-2 pixels), we extended the algorithm to work on multiple scales. The implementation involved the function:
 
 multi_lk(I1, I2, features, rho, epsilon, dx_0, dy_0, Num)
+
 ### Procedure
 
 #### Gaussian Pyramids:
