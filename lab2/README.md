@@ -46,7 +46,7 @@ Finally, bounding boxes are calculated by enclosing the identified components wi
 
 ## Lucas-Kanade Algorithm
 
-The Lucas-Kanade algorithm is a widely used method for optical flow computation based on the **least-squares principle**. Its goal is to estimate the motion vector \( \mathbf{u} = (u, v) \) at each pixel of an image sequence by solving for the best-fit motion consistent with the intensity changes.
+The Lucas-Kanade algorithm is a widely used method for optical flow computation based on the **least-squares principle**. Its goal is to estimate the motion vector $$\( \mathbf{u} = (u, v) \)$$ at each pixel of an image sequence by solving for the best-fit motion consistent with the intensity changes.
 
 ## **Theoretical Basis**
 
@@ -62,7 +62,7 @@ Where:
 - $$\( u, v \)$$ represent the horizontal and vertical components of the flow vector $$\( \mathbf{u} \)$$.
 
 ### **Assumptions**
-1. The intensity of a moving object remains constant over time: $$ I(x, y, t) = I(x + u, y + v, t+1) $$.
+1. The intensity of a moving object remains constant over time: $$I(x, y, t) = I(x + u, y + v, t+1)$$.
 2. Small motion approximation: Higher-order terms in the Taylor expansion of the intensity function are ignored.
 3. Local spatial coherence: Neighboring pixels have similar motion.
 
