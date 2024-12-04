@@ -73,7 +73,7 @@ $$
 E(u, v) = \sum_{(x_i, y_i) \in W} \left( I_x(x_i, y_i) u + I_y(x_i, y_i) v + I_t(x_i, y_i) \right)^2
 $$
 
-This leads to solving the following linear system:
+This leads to solving the following linear system
 
 $$
 \begin{bmatrix}
@@ -98,7 +98,7 @@ A \cdot \mathbf{u} = \mathbf{b}
 $$
 
 Where:
-- \( A \) is the \( 2 \times 2 \) structure tensor:
+- \( A \) is the \( 2 \times 2 \) structure tensor
 
 $$
 A =
