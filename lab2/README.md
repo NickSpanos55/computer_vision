@@ -57,9 +57,9 @@ I_x u + I_y v + I_t = 0
 $$
 
 Where:
-- \( I_x, I_y \) are the spatial intensity gradients in the \( x \)- and \( y \)-directions.
-- \( I_t \) is the temporal intensity gradient.
-- \( u, v \) represent the horizontal and vertical components of the flow vector \( \mathbf{u} \).
+- $$\( I_x, I_y \)$$ are the spatial intensity gradients in the $$\( x \)$$- and $$\( y \)$$-directions.
+- $$\( I_t \)$$ is the temporal intensity gradient.
+- $$\( u, v \)$$ represent the horizontal and vertical components of the flow vector $$\( \mathbf{u} \)$$.
 
 ### **Assumptions**
 1. The intensity of a moving object remains constant over time: $$ I(x, y, t) = I(x + u, y + v, t+1) $$.
@@ -67,7 +67,7 @@ Where:
 3. Local spatial coherence: Neighboring pixels have similar motion.
 
 ### **Least-Squares Formulation**
-To estimate \( \mathbf{u} \) for each pixel, Lucas-Kanade uses a local window \( W \) (e.g., \( 5 \times 5 \)) and minimizes the squared error of the constraint equation for all pixels in \( W \):
+To estimate $$\( \mathbf{u} \)$$ for each pixel, Lucas-Kanade uses a local window $$\( W \)$$ (e.g., $$\( 5 \times 5 \)$$) and minimizes the squared error of the constraint equation for all pixels in \( W \):
 
 $$
 E(u, v) = \sum_{(x_i, y_i) \in W} \left( I_x(x_i, y_i) u + I_y(x_i, y_i) v + I_t(x_i, y_i) \right)^2
