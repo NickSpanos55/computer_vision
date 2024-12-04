@@ -5,13 +5,14 @@
 To detect skin regions, RGB images are converted into the YCbCr color space, retaining only the Cb and Cr components. This approach isolates the actual skin color, removing the Y component, which represents brightness and is influenced by lighting conditions.
 
 <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
-  <img src="./assets/Screenshot_9.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
-  <img src="./assets/Screenshot_10.jpg" alt="Training Image with Highlighted Skin Regions" style="width: 20%;"/>
+  <img src="./assets/Screenshot_1.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
 </div>
 
 After calculating the mean and covariance matrix of the Cb and Cr components from a training image, the value of each pixel in the video is evaluated against a Gaussian distribution.
 
-![Training Image with Highlighted Skin Regions](path-to-image.png)
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
+  <img src="./assets/Screenshot_2.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+</div>
 
 Subsequently, the pixel distribution is thresholded, keeping only those with values greater than 0.23. Morphological operations, **Opening** with a kernel size of 4x4 pixels and **Closing** with a kernel size of 10x10 pixels, are applied. These operations refine the detected regions, especially in distinguishing facial areas from hands.
 
