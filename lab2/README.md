@@ -126,14 +126,12 @@ $$
 3. **Iterative Updates**:
    - For each pixel, the flow vector $$\( \mathbf{d} \)$$ is updated iteratively:
 
-   $$
-   \mathbf{d_{i+1}} = \mathbf{d_i} + \mathbf{u}
-   $$
+   $$\mathbf{d_{i+1}} = \mathbf{d_i} + \mathbf{u}$$
 
    - The stopping criterion is based on the **L2 norm** of $$\( \mathbf{u} \)$$: If $$\( \| \mathbf{u} \|2 < 0.02 \)$$, the iterations stop. Otherwise, the algorithm continues for a maximum of 300 iterations.
 
 ### **Observations**
-- With parameters \( \epsilon = 0.005 \) and \( \rho = 2 \), results were stable. However, for very small \( \epsilon \) (e.g., \( 0.001 \)), the algorithm produced erroneous flow with unnatural patterns in some cases.
+- With parameters $$\( \epsilon = 0.005 \)$$ and $$\( \rho = 2 \)$$, results were stable. However, for very small $$\( \epsilon \) (e.g., \( 0.001 \)$$), the algorithm produced erroneous flow with unnatural patterns in some cases.
 - The algorithm struggled to converge within the maximum iterations for high-motion areas, like hands in images.
 
 ---
