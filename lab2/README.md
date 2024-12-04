@@ -46,28 +46,6 @@ Finally, bounding boxes are calculated by enclosing the identified components wi
 
 ## Lucas-Kanade Algorithm
 
-The Lucas-Kanade algorithm is one of the most widely used methods for calculating optical flow. It assumes **brightness constancy**, **small motion**, and **spatial coherence**, which means:
-
-1. The brightness of a point in an image remains constant between consecutive frames.
-2. The motion between frames is small, allowing the use of first-order Taylor expansion for approximations.
-3. Pixels in a small neighborhood move in a similar manner.
-
-These assumptions lead to the **optical flow constraint equation**:
-
-**\[
-I_x u + I_y v + I_t = 0
-\]**
-
-Where:
-- \( I_x, I_y \): Spatial derivatives of the image intensity.
-- \( I_t \): Temporal derivative of the image intensity.
-- \( u, v \): Components of the optical flow vector.
-
-The goal is to solve for \( u \) and \( v \), which represent the motion in the \( x \)- and \( y \)-directions.
-
-![Lucas-Kanade Algorithm Flowchart](path-to-image.png)
-
-# 1.2) Lucas-Kanade Algorithm for Optical Flow
 
 The Lucas-Kanade algorithm is a widely used method for optical flow computation based on the **least-squares principle**. Its goal is to estimate the motion vector \( \mathbf{u} = (u, v) \) at each pixel of an image sequence by solving for the best-fit motion consistent with the intensity changes.
 
@@ -154,7 +132,7 @@ The solution for \( \mathbf{u} \) is given by:
 
 ---
 
-## **1.2.2) Optical Flow Displacement for Bounding Boxes**
+## **Optical Flow Displacement for Bounding Boxes**
 
 To compute the displacement vector for a region of interest (ROI) such as a bounding box, we implemented the function:
 
