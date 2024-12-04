@@ -16,11 +16,15 @@ After calculating the mean and covariance matrix of the Cb and Cr components fro
 
 Subsequently, the pixel distribution is thresholded, keeping only those with values greater than 0.23. Morphological operations, **Opening** with a kernel size of 4x4 pixels and **Closing** with a kernel size of 10x10 pixels, are applied. These operations refine the detected regions, especially in distinguishing facial areas from hands.
 
-![Morphological Operations Example](path-to-image.png)
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
+  <img src="./assets/Screenshot_3.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+</div>
 
 Using Python commands `label` and `np.unique`, connected components in the image are identified. The three largest connected components (face and two hands) are retained, and bounding boxes enclosing them are drawn.
 
-![Bounding Boxes Example](path-to-image.png)
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
+  <img src="./assets/Screenshot_5.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+</div>
 
 ---
 
