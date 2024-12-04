@@ -52,9 +52,9 @@ The Lucas-Kanade algorithm is a widely used method for optical flow computation 
 
 The algorithm operates under the **optical flow constraint equation**:
 
-\[
+$$
 I_x u + I_y v + I_t = 0
-\]
+$$
 
 Where:
 - \( I_x, I_y \) are the spatial intensity gradients in the \( x \)- and \( y \)-directions.
@@ -62,20 +62,20 @@ Where:
 - \( u, v \) represent the horizontal and vertical components of the flow vector \( \mathbf{u} \).
 
 ### **Assumptions**
-1. The intensity of a moving object remains constant over time: \( I(x, y, t) = I(x + u, y + v, t+1) \).
+1. The intensity of a moving object remains constant over time: $$ I(x, y, t) = I(x + u, y + v, t+1) $$.
 2. Small motion approximation: Higher-order terms in the Taylor expansion of the intensity function are ignored.
 3. Local spatial coherence: Neighboring pixels have similar motion.
 
 ### **Least-Squares Formulation**
 To estimate \( \mathbf{u} \) for each pixel, Lucas-Kanade uses a local window \( W \) (e.g., \( 5 \times 5 \)) and minimizes the squared error of the constraint equation for all pixels in \( W \):
 
-\[
+$$
 E(u, v) = \sum_{(x_i, y_i) \in W} \left( I_x(x_i, y_i) u + I_y(x_i, y_i) v + I_t(x_i, y_i) \right)^2
-\]
+$$
 
 This leads to solving the following linear system:
 
-\[
+$$
 \begin{bmatrix}
 \sum I_x^2 & \sum I_x I_y \\
 \sum I_x I_y & \sum I_y^2
@@ -89,32 +89,32 @@ v
 -\sum I_x I_t \\
 -\sum I_y I_t
 \end{bmatrix}
-\]
+$$
 
 Or in matrix form:
 
-\[
+$$
 A \cdot \mathbf{u} = \mathbf{b}
-\]
+$$
 
 Where:
 - \( A \) is the \( 2 \times 2 \) structure tensor:
 
-\[
+$$
 A =
 \begin{bmatrix}
 \sum I_x^2 & \sum I_x I_y \\
 \sum I_x I_y & \sum I_y^2
 \end{bmatrix}
-\]
+$$
 
 - \( \mathbf{b} = \begin{bmatrix} -\sum I_x I_t \\ -\sum I_y I_t \end{bmatrix} \)
 
 The solution for \( \mathbf{u} \) is given by:
 
-\[
+$$
 \mathbf{u} = A^{-1} \mathbf{b}
-\]
+$$
 
 ### **Implementation Details**
 1. **Gradient Calculation**:
@@ -126,10 +126,12 @@ The solution for \( \mathbf{u} \) is given by:
 3. **Iterative Updates**:
    - For each pixel, the flow vector \( \mathbf{d} \) is updated iteratively:
 
-   \[
+   $$
    \mathbf{d}_{i+1} = \mathbf{d}_i + \mathbf{u}
-   \]
-   - The stopping criterion is based on the **L2 norm** of \( \mathbf{u} \): If \( \| \mathbf{u} \|_2 < 0.02 \),the iterations stop. Otherwise, the algorithm continues for a maximum of 300 iterations.
+   $$
+
+   - The stopping criterion is based on the **L2 norm** of \( \mathbf{u} \): If \( \| \mathbf{u} \|_2 < 0.02 \), the iterations stop. Otherwise, the algorithm continues for a maximum of 300 iterations.
+
 ### **Observations**
 - With parameters \( \epsilon = 0.005 \) and \( \rho = 2 \), results were stable. However, for very small \( \epsilon \) (e.g., \( 0.001 \)), the algorithm produced erroneous flow with unnatural patterns in some cases.
 - The algorithm struggled to converge within the maximum iterations for high-motion areas, like hands in images.
@@ -140,15 +142,16 @@ The solution for \( \mathbf{u} \) is given by:
 
 To compute the displacement vector for a region of interest (ROI) such as a bounding box, we implemented the function:
 
-displ(d_x, d_y, threshold)
+`displ(d_x, d_y, threshold)`
 
 This function processes optical flow vectors \(\mathbf{d}_x, \mathbf{d}_y \) within the ROI using the following steps:
+
 1. **Energy-Based Filtering**:
    - Compute the maximum flow energy \( E_{max} \) as:
 
-   \[
+   $$
    E = \sqrt{d_x^2 + d_y^2}, \quad E_{max} = \max(E)
-   \]
+   $$
 
    - Retain vectors satisfying \( E \geq \text{threshold} \cdot E_{max} \).
 
@@ -167,7 +170,7 @@ For \( \text{threshold} = 0.5 \) (50%), the results were satisfactory.
 
 To address limitations in large-motion scenarios (e.g., motion > 1-2 pixels), we extended the algorithm to work on multiple scales. The implementation involved the function:
 
-multi_lk(I1, I2, features, rho, epsilon, dx_0, dy_0, Num)
+`multi_lk(I1, I2, features, rho, epsilon, dx_0, dy_0, Num)`
 
 ### Procedure
 
@@ -191,6 +194,7 @@ The multiscale Lucas-Kanade significantly outperformed the single-scale version,
   <img src="./assets/Screenshot_10.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
   <img src="./assets/Screenshot_11.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
 </div>
+
 
 ---
 
