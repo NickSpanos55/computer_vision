@@ -222,6 +222,10 @@ After calculating the criteria for both Harris and Gabor detectors, we identify 
 
 #### Visualization Example
 Below is a visualization of the Harris (left) and Gabor (right) criteria for the same frame:
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
+  <img src="./assets/Screenshot_12.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+  <img src="./assets/Screenshot_13.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+</div>
 
 **Observations**:
 - Even for the same frame, the detectors exhibit different responses. Harris emphasizes regions like the elbow, while Gabor highlights areas around the hands.
@@ -231,11 +235,21 @@ Below is a visualization of the Harris (left) and Gabor (right) criteria for the
 
 #### Comparative Frames
 **Example 1**: Boxing Frames  
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
+  <img src="./assets/Screenshot_14.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+  <img src="./assets/Screenshot_15.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+</div>
+
 Frames 26 and 27 from the video *person12_boxing_d3_uncomp.avi* show that:
 - The Gabor detector successfully identifies hand movements in the first row.
 - Harris, shown in the second row, fails to detect the motion.
 
 **Example 2**: Running Frames  
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
+  <img src="./assets/Screenshot_16.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+  <img src="./assets/Screenshot_17.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+</div>
+
 Frames from the video *person01_running_d1_uncomp.avi* demonstrate:
 - Harris detects the runner's legs in the first row.
 - Gabor highlights areas near the knees in the second row.
