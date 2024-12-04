@@ -124,9 +124,7 @@ $$
    - To improve robustness against noise, a Gaussian filter (scale $$\( \rho \)$$) is applied to the elements of $$\( A \)$$ and $$\( \mathbf{b} \)$$. This was implemented using a Gaussian kernel.
 
 3. **Iterative Updates**:
-   - For each pixel, the flow vector $$\( \mathbf{d} \)$$ is updated iteratively:
-
-   $$\mathbf{d_{i+1}} = \mathbf{d_i} + \mathbf{u}$$
+   - For each pixel, the flow vector $$\( \mathbf{d} \)$$ is updated iteratively: $$\mathbf{d_{i+1}} = \mathbf{d_i} + \mathbf{u}$$
 
    - The stopping criterion is based on the **L2 norm** of $$\( \mathbf{u} \)$$: If $$\( \| \mathbf{u} \|2 < 0.02 \)$$, the iterations stop. Otherwise, the algorithm continues for a maximum of 300 iterations.
 
@@ -198,50 +196,81 @@ The multiscale Lucas-Kanade significantly outperformed the single-scale version,
 
 # Harris and Gabor Feature Detectors
 
-## Harris Corner Detector
+### 2.1.1) Initial Computation of L Matrices
 
-The Harris detector computes local derivatives using Gaussian kernels and directional filters. The corner criterion is derived from the determinant and trace of the structure tensor.
+To begin, we compute the $$\( L \)$$ matrices by performing one-dimensional convolution along the first two spatial dimensions of the video frames with a Gaussian kernel of standard deviation $$\( \sigma \)$$. For the temporal dimension, we convolve with a Gaussian kernel of standard deviation $$\( \tau \)$$. 
 
-![Harris Corner Detection Visualization](path-to-image.png)
+Next, we apply one-dimensional convolution along each axis using the kernel:
 
-## Gabor Feature Detector
+$$\[
+\begin{bmatrix}
+-1 & 0 & 1
+\end{bmatrix}
+\]$$
 
-Gabor filters are applied spatially and temporally to enhance specific orientations and motions. The sum of squared filter responses is used as the significance criterion.
+to compute the partial derivatives. Following this, we calculate the elements of the matrix $$\( A \)$$ and repeat the process with scaled Gaussian densities $$\( s\sigma \)$$ and $$\( s\tau \)$$. 
 
-![Gabor Filter Results Example](path-to-image.png)
-
----
-
-# Feature Descriptors
-
-## HOG and HOF Descriptors
-
-The HOG descriptor computes a histogram of spatial gradients, while the HOF descriptor uses dense optical flow fields (e.g., TVL1). Both descriptors analyze local regions around key points to capture motion and texture information.
-
-![HOG vs HOF Comparison](path-to-image.png)
-
-## SVM Classification
-
-Using these descriptors, an SVM classifier was trained and tested on labeled video datasets. Results showed that the Gabor detector combined with HOF achieved 100% accuracy, outperforming other combinations.
-
-![Accuracy Comparison Graph](path-to-image.png)
+Using the functions `numpy.linalg.det` and `numpy.linalg.trace`, we compute the **cornerness criterion** for each region.
 
 ---
 
-# Feature Matching with SIFT
+### **Gabor Detector**
+#### 2.1.2) Implementation Details
+We implement two filters, **hev** and **hod**, and apply convolution with a two-dimensional Gaussian kernel along the spatial components. Additionally, convolution with the filters is performed along the temporal component. By adding the squared results, we obtain the **saliency criterion** for the Gabor detector.
 
-## Steps for SIFT Feature Matching
+After calculating the criteria for both Harris and Gabor detectors, we identify the top 600 key points that maximize these criteria. We append a vertical column to both matrices containing the scale values at which the computations were performed (useful for the `show_detection` function).
 
-1. Detect key points and compute descriptors using `sift.detectAndCompute`.
-2. Match features between images using `cv.FlannBasedMatcher`.
-3. Filter matches based on distance ratio (e.g., <0.75).
-4. Refine matches with the RANSAC algorithm to estimate homography.
-5. Transform images using the calculated homography and align them.
+#### Visualization Example
+Below is a visualization of the Harris (left) and Gabor (right) criteria for the same frame:
 
-![Keypoint Matching and Homography Example](path-to-image.png)
+**Observations**:
+- Even for the same frame, the detectors exhibit different responses. Harris emphasizes regions like the elbow, while Gabor highlights areas around the hands.
+- Harris produces significantly lower values in non-body regions, effectively rejecting irrelevant areas.
 
 ---
 
-# Final Notes
+#### Comparative Frames
+**Example 1**: Boxing Frames  
+Frames 26 and 27 from the video *person12_boxing_d3_uncomp.avi* show that:
+- The Gabor detector successfully identifies hand movements in the first row.
+- Harris, shown in the second row, fails to detect the motion.
 
-With the placeholders above, you can insert your images directly into the Markdown. Let me know if you need help with further edits!
+**Example 2**: Running Frames  
+Frames from the video *person01_running_d1_uncomp.avi* demonstrate:
+- Harris detects the runner's legs in the first row.
+- Gabor highlights areas near the knees in the second row.
+
+These differences stem from the distinct criteria maximized by each detector, which leads to varying regions of interest.
+
+---
+
+### 2.2) Descriptors Implementation
+
+We implemented the `Descriptors` function, which returns **HOG (Histogram of Oriented Gradients)** and **HOF (Histogram of Optical Flow)** descriptors:
+
+- **HOG Descriptor**:
+  - Computes histograms of the two spatial derivatives around the points of interest ($$\( \pm 4\sigma \)$$ in each direction).
+
+- **HOF Descriptor**:
+  - Computes histograms based on the dense optical flow field using the **TVL1** method.
+
+---
+
+### 2.3) SVM Training and Results
+
+After computing the directional histograms, we trained an SVM classifier for each combination of detectors and descriptors. Using the provided text file, we split the videos into training and testing sets, yielding the following results:
+
+| **Accuracy Metrics** | **HOG** | **HOF** | **HOG/HOF** |
+|-----------------------|---------|---------|-------------|
+| **Gabor**            | 0.834   | 1.0     | **1.0**     |
+| **Harris**           | 0.5834  | 1.0     | 0.667       |
+
+#### Observations
+- The Gabor detector generally outperformed the Harris detector.
+- The combination of **HOF-Gabor** and **HOG/HOF-Gabor** achieved the highest accuracy (100%).
+
+---
+
+This methodology highlights the strengths and weaknesses of different detectors and descriptors in various motion scenarios. The choice of detector-descriptor pairing has a significant impact on performance, as demonstrated in the results.
+
+---
