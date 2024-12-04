@@ -75,6 +75,7 @@ $$
 
 This leads to solving the following linear system
 
+
 $$
 \begin{bmatrix}
 \sum I_x^2 & \sum I_x I_y \\
@@ -83,19 +84,22 @@ $$
 \begin{bmatrix}
 u \\
 v
-\end{bmatrix}
-=
+\end{bmatrix} = 
+
 \begin{bmatrix}
 -\sum I_x I_t \\
 -\sum I_y I_t
 \end{bmatrix}
 $$
 
+
 Or in matrix form:
+
 
 $$
 A \cdot \mathbf{u} = \mathbf{b}
 $$
+
 
 Where:
 - \( A \) is the \( 2 \times 2 \) structure tensor
