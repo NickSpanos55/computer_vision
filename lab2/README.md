@@ -286,3 +286,65 @@ After computing the directional histograms, we trained an SVM classifier for eac
 This methodology highlights the strengths and weaknesses of different detectors and descriptors in various motion scenarios. The choice of detector-descriptor pairing has a significant impact on performance, as demonstrated in the results.
 
 ---
+
+# Keypoint Detection, Matching, and Image Stitching
+
+## Step 1: Keypoint Detection and Descriptor Computation
+Using the function `sift.detectAndCompute`, we calculate keypoints in each image and compute local descriptors for these points. The identified keypoints on the original images are as follows:
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
+  <img src="./assets/Screenshot_18.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+  <img src="./assets/Screenshot_19.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+  <img src="./assets/Screenshot_20.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+</div>
+
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
+  <img src="./assets/Screenshot_21.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+  <img src="./assets/Screenshot_22.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+  <img src="./assets/Screenshot_23.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+</div>
+
+## Step 2: Keypoint Matching
+To match the detected keypoints, we opted for the `cv.FlannBasedMatcher` function. This method offers good results while being significantly faster than exhaustive methods such as `BFMatcher`. For each keypoint in one image, we compute the two closest matches using `knnMatch` based on their descriptors. This matching process between two images results in:
+
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
+  <img src="./assets/Screenshot_24.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+</div>
+
+Although several matches are identified, many are inaccurate. Therefore, in the next step, we retain only the "best" matches based on the ratio being lower than 0.75.
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
+  <img src="./assets/Screenshot_25.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+</div>
+
+
+## Step 3: Filtering Matches
+For each matched keypoint, we calculate two distances: one for the best match and another for the second-best match. We retain only those keypoints where the ratio of these distances is less than 0.75. After applying this filter:
+
+We observe that primarily the keypoints present in both images remain, indicating successful matching.
+
+## Step 4: Homography Estimation and Outlier Removal
+Despite the filtered matches, some outliers persist. To address this, we employ the RANSAC algorithm to compute the homography matrix $$\( H \)$$ robustly, unaffected by outliers. The homography matrix is calculated using the `cv.findHomography` function, with the RANSAC threshold set to 5 (a value between 1 and 10 is typically optimal). This results in:
+
+## Step 5: Image Warping
+To compute the transformed image, the following steps were performed:
+
+1. **Perspective Transformation:** Using `cv.perspectiveTransform`, we calculate the new positions of the corners of the transformed image $$\( img1\_warped \)$$.
+2. **Dimension Calculation:** Based on these positions (in the coordinate system of $$\( img2 \)$$), we determine the overall dimensions of $$\( img1\_warped \)$$ (including black regions) and the coordinates of the top-left corner.
+3. **Inverse Warping:** All points of $$\( img1\_warped \)$$ are mapped to the coordinate system of $$\( img1 \)$$ by adjusting their offset and passing them through the inverse of the homography matrix $$\( H^{-1} \)$$ using `cv.perspectiveTransform`.
+4. **Pixel Mapping:** For each mapped point in $$\( img1 \)$$, only those within its bounds are retained, as black regions in $$\( img1\_warped \)$$ do not correspond to valid pixels.
+5. **Floating Point Conversion:** Pixel coordinates, initially floating-point values, are converted to integers using `np.floor` for correspondence with pixel indices. Linear interpolation methods (e.g., `scipy.interpolate.griddata`) were tested but found significantly slower than the simpler rounding methods.
+6. **Pixel Transfer:** RGB values from \( img1 \) are transferred to their corresponding locations in $$\( img1\_warped \)$$.
+
+For example, applying this transformation to `1.png` (left section of the mountain) with the homography matrix $$\( H \)$$ from `2.png` (central section of the mountain) yields:
+
+The image is correctly shifted to align for stitching in the next step.
+
+## Step 6: Image Stitching
+To merge $$\( img1\_warped \)$$ and $$\( img2 \)$$, the `mergeWarpedImages` function was implemented. This function takes as input the dimensions and top-left corner coordinates of $$\( img1\_warped \)$$ (relative to the coordinate system of $$\( img2 \)$$). The process involves:
+
+1. **Final Image Dimensions:** Based on the dimensions of $$\( img1\_warped \)$$ and $$\( img2 \)$$, the dimensions of the final image $$\( stitchedImage \)$$ are computed.
+2. **Image Copying:** Both images are copied into $$\( stitchedImage \)$$ sequentially, starting with $$\( img1\_warped \)$$ and followed by $$\( img2 \)$$, ensuring no overlap with black regions.
+3. **Black Region Removal:** Any padded black regions around the final image are removed for aesthetic purposes, without affecting the final output.
+
+Finally, applying the `stitchImages` function recursively across all six mountain images produces the following results at each step:
+
+The final stitched image seamlessly combines all sections of the mountain into one cohesive image.
