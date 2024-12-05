@@ -351,11 +351,11 @@ To merge $$\( img1\_warped \)$$ and $$\( img2 \)$$, the `mergeWarpedImages` func
 3. **Black Region Removal:** Any padded black regions around the final image are removed for aesthetic purposes, without affecting the final output.
 
 Finally, applying the `stitchImages` function recursively across all six mountain images produces the following results at each step:
-<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
-  <img src="./assets/Screenshot_27.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
-  <img src="./assets/Screenshot_28.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
-  <img src="./assets/Screenshot_29.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
-  <img src="./assets/Screenshot_30.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
-  <img src="./assets/Screenshot_31.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 15%;">
+  <img src="./assets/Screenshot_27.jpg" alt="YCbCr Color Space Diagram" style="width: 15%;"/>
+  <img src="./assets/Screenshot_28.jpg" alt="YCbCr Color Space Diagram" style="width: 15%;"/>
+  <img src="./assets/Screenshot_29.jpg" alt="YCbCr Color Space Diagram" style="width: 15%;"/>
+  <img src="./assets/Screenshot_30.jpg" alt="YCbCr Color Space Diagram" style="width: 15%;"/>
+  <img src="./assets/Screenshot_31.jpg" alt="YCbCr Color Space Diagram" style="width: 15%;"/>
 </div>
 The final stitched image seamlessly combines all sections of the mountain into one cohesive image.
