@@ -330,12 +330,12 @@ Despite the filtered matches, some outliers persist. To address this, we employ 
 ## Step 5: Image Warping
 To compute the transformed image, the following steps were performed:
 
-1. **Perspective Transformation:** Using `cv.perspectiveTransform`, we calculate the new positions of the corners of the transformed image $$\( img1\_warped \)$$.
+1. **Perspective Transformation:** Using `cv.perspectiveTransform`, we calculate the new positions of the corners of the transformed image $$\( img1_{warped} \)$$.
 2. **Dimension Calculation:** Based on these positions (in the coordinate system of $$\( img2 \)$$), we determine the overall dimensions of $$\( img1\_warped \)$$ (including black regions) and the coordinates of the top-left corner.
-3. **Inverse Warping:** All points of $$\( img1\_warped \)$$ are mapped to the coordinate system of $$\( img1 \)$$ by adjusting their offset and passing them through the inverse of the homography matrix $$\( H^{-1} \)$$ using `cv.perspectiveTransform`.
-4. **Pixel Mapping:** For each mapped point in $$\( img1 \)$$, only those within its bounds are retained, as black regions in $$\( img1\_warped \)$$ do not correspond to valid pixels.
+3. **Inverse Warping:** All points of $$\( img1_{warped} \)$$ are mapped to the coordinate system of $$\( img1 \)$$ by adjusting their offset and passing them through the inverse of the homography matrix $$\( H^{-1} \)$$ using `cv.perspectiveTransform`.
+4. **Pixel Mapping:** For each mapped point in $$\( img1 \)$$, only those within its bounds are retained, as black regions in $$\( img1_{warped} \)$$ do not correspond to valid pixels.
 5. **Floating Point Conversion:** Pixel coordinates, initially floating-point values, are converted to integers using `np.floor` for correspondence with pixel indices. Linear interpolation methods (e.g., `scipy.interpolate.griddata`) were tested but found significantly slower than the simpler rounding methods.
-6. **Pixel Transfer:** RGB values from \( img1 \) are transferred to their corresponding locations in $$\( img1\_warped \)$$.
+6. **Pixel Transfer:** RGB values from \( img1 \) are transferred to their corresponding locations in $$\( img1_{warped} \)$$.
 
 For example, applying this transformation to `1.png` (left section of the mountain) with the homography matrix $$\( H \)$$ from `2.png` (central section of the mountain) yields:
 
@@ -346,7 +346,7 @@ The image is correctly shifted to align for stitching in the next step.
 </div>
 
 ## Step 6: Image Stitching
-To merge $$\( img1\_warped \)$$ and $$\( img2 \)$$, the `mergeWarpedImages` function was implemented. This function takes as input the dimensions and top-left corner coordinates of $$\( img1\_warped \)$$ (relative to the coordinate system of $$\( img2 \)$$). The process involves:
+To merge $$\( img1_{warped} \)$$ and $$\( img2 \)$$, the `mergeWarpedImages` function was implemented. This function takes as input the dimensions and top-left corner coordinates of $$\( img1_{warped} \)$$ (relative to the coordinate system of $$\( img2 \)$$). The process involves:
 
 1. **Final Image Dimensions:** Based on the dimensions of $$\( img1\_warped \)$$ and $$\( img2 \)$$, the dimensions of the final image $$\( stitchedImage \)$$ are computed.
 2. **Image Copying:** Both images are copied into $$\( stitchedImage \)$$ sequentially, starting with $$\( img1\_warped \)$$ and followed by $$\( img2 \)$$, ensuring no overlap with black regions.
