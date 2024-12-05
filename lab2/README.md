@@ -311,18 +311,23 @@ To match the detected keypoints, we opted for the `cv.FlannBasedMatcher` functio
 </div>
 
 Although several matches are identified, many are inaccurate. Therefore, in the next step, we retain only the "best" matches based on the ratio being lower than 0.75.
-<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
-  <img src="./assets/Screenshot_25.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
-</div>
+
 
 
 ## Step 3: Filtering Matches
 For each matched keypoint, we calculate two distances: one for the best match and another for the second-best match. We retain only those keypoints where the ratio of these distances is less than 0.75. After applying this filter:
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
+  <img src="./assets/Screenshot_25.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+</div>
 
 We observe that primarily the keypoints present in both images remain, indicating successful matching.
 
 ## Step 4: Homography Estimation and Outlier Removal
 Despite the filtered matches, some outliers persist. To address this, we employ the RANSAC algorithm to compute the homography matrix $$\( H \)$$ robustly, unaffected by outliers. The homography matrix is calculated using the `cv.findHomography` function, with the RANSAC threshold set to 5 (a value between 1 and 10 is typically optimal). This results in:
+
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
+  <img src="./assets/Screenshot_26.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+</div>
 
 ## Step 5: Image Warping
 To compute the transformed image, the following steps were performed:
@@ -346,5 +351,11 @@ To merge $$\( img1\_warped \)$$ and $$\( img2 \)$$, the `mergeWarpedImages` func
 3. **Black Region Removal:** Any padded black regions around the final image are removed for aesthetic purposes, without affecting the final output.
 
 Finally, applying the `stitchImages` function recursively across all six mountain images produces the following results at each step:
-
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
+  <img src="./assets/Screenshot_27.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+  <img src="./assets/Screenshot_28.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+  <img src="./assets/Screenshot_29.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+  <img src="./assets/Screenshot_30.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+  <img src="./assets/Screenshot_31.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+</div>
 The final stitched image seamlessly combines all sections of the mountain into one cohesive image.
