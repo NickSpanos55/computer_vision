@@ -325,9 +325,7 @@ We observe that primarily the keypoints present in both images remain, indicatin
 ## Step 4: Homography Estimation and Outlier Removal
 Despite the filtered matches, some outliers persist. To address this, we employ the RANSAC algorithm to compute the homography matrix $$\( H \)$$ robustly, unaffected by outliers. The homography matrix is calculated using the `cv.findHomography` function, with the RANSAC threshold set to 5 (a value between 1 and 10 is typically optimal). This results in:
 
-<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
-  <img src="./assets/Screenshot_26.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
-</div>
+
 
 ## Step 5: Image Warping
 To compute the transformed image, the following steps were performed:
@@ -342,6 +340,10 @@ To compute the transformed image, the following steps were performed:
 For example, applying this transformation to `1.png` (left section of the mountain) with the homography matrix $$\( H \)$$ from `2.png` (central section of the mountain) yields:
 
 The image is correctly shifted to align for stitching in the next step.
+
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
+  <img src="./assets/Screenshot_26.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+</div>
 
 ## Step 6: Image Stitching
 To merge $$\( img1\_warped \)$$ and $$\( img2 \)$$, the `mergeWarpedImages` function was implemented. This function takes as input the dimensions and top-left corner coordinates of $$\( img1\_warped \)$$ (relative to the coordinate system of $$\( img2 \)$$). The process involves:
