@@ -9,6 +9,7 @@
    - Images for $$\(PSNR = 20dB\)$$ and $$\(PSNR = 10dB\)$$ demonstrate the impact of varying levels of noise.
    <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
       <img src="./assets/Screenshot_2.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+      <img src="./assets/Screenshot_3.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
    </div>
 
    - **Observation**: Noise is significantly more apparent in the $$\(10dB\)$$ image, disrupting the clarity of details.
@@ -19,8 +20,7 @@
 1. **Gaussian and Laplacian of Gaussian (LoG) Kernels**:
    - Designed using OpenCV's `getGaussianKernel` and a custom `meshgrid` LoG formula.
    - Kernels exhibit:
-   <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
-      <img src="./assets/Screenshot_3.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+   <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">    
       <img src="./assets/Screenshot_4.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
    </div>
    - **Gaussian**: A central peak, resembling a smooth distribution.
@@ -47,7 +47,7 @@
    </div>
      - Utilizes erosion and dilation operations on the smoothed image.
      - Difference from linear method: Non-linear filters are more robust to noise.
-     
+
    - **Result Comparison**:
      - Non-linear methods display cleaner edges, especially at \(PSNR = 10dB\), as noise has less impact on edge clarity.
      <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
