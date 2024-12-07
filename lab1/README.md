@@ -10,7 +10,7 @@
    <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
       <img src="./assets/Screenshot_2.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
    </div>
-   
+
    - **Observation**: Noise is significantly more apparent in the $$\(10dB\)$$ image, disrupting the clarity of details.
 
 ---
@@ -47,6 +47,9 @@
    </div>
      - Utilizes erosion and dilation operations on the smoothed image.
      - Difference from linear method: Non-linear filters are more robust to noise.
+     
+   - **Result Comparison**:
+     - Non-linear methods display cleaner edges, especially at \(PSNR = 10dB\), as noise has less impact on edge clarity.
      <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
       <img src="./assets/Screenshot_11.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
       <img src="./assets/Screenshot_12.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
@@ -60,22 +63,6 @@
       <img src="./assets/Screenshot_17.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
       <img src="./assets/Screenshot_18.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
      </div>
-   - **Result Comparison**:
-     - Non-linear methods display cleaner edges, especially at \(PSNR = 10dB\), as noise has less impact on edge clarity.
-     <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
-      <img src="./assets/Screenshot_19.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
-      <img src="./assets/Screenshot_20.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
-      <img src="./assets/Screenshot_21.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
-      <img src="./assets/Screenshot_22.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
-     </div>
-
-     <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
-      <img src="./assets/Screenshot_23.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
-      <img src="./assets/Screenshot_24.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
-      <img src="./assets/Screenshot_25.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
-      <img src="./assets/Screenshot_26.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
-     </div>
-
 ---
 
 #### Section 1.3: Binary Edge Maps and Thresholding
