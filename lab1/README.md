@@ -96,7 +96,7 @@
    - Ground truth edges ($$\(\theta_{realedge}\)$$) help measure the accuracy of detected edges.
    - Precision, recall, and their average provide quantitative metrics for performance.
    | Parameters                                    | C-evaluation |
-   |---------------------------------------------- |--------------|
+   |----------------------------------------------|--------------|
    | PSNR=20dB, σ=1.3, θ=0.35, linear approach     | 0.853121     |
    | PSNR=20dB, σ=1.3, θ=0.35, non-linear approach | 0.854772     |
    | PSNR=15dB, σ=1.6, θ=0.4, linear approach      | 0.837746     |
