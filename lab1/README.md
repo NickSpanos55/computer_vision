@@ -43,13 +43,14 @@
    </div>
 
    - **Non-Linear Approach**:
+     - Utilizes erosion and dilation operations on the smoothed image.
+     - Difference from linear method: Non-linear filters are more robust to noise.
    <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
       <img src="./assets/Screenshot_10.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
       <img src="./assets/Screenshot_11.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
    </div>
-   
-     - Utilizes erosion and dilation operations on the smoothed image.
-     - Difference from linear method: Non-linear filters are more robust to noise.
+
+     
 
    - **Result Comparison**:
      - Non-linear methods display cleaner edges, especially at \(PSNR = 10dB\), as noise has less impact on edge clarity.
@@ -74,7 +75,15 @@
    - Thresholding ($$\(\theta_{edge}\)$$) is applied to minimize noise effects.
    - Results show trade-offs between edge retention and noise suppression:
      - Higher $$\(\theta_{edge}\)$$ removes noise but risks losing fine edges.
+     <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
+      <img src="./assets/Screenshot_20.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+      <img src="./assets/Screenshot_21.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+     </div>
      - Lower $$\(\theta_{edge}\)$$ retains noise but maintains more detailed edges.
+     <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
+      <img src="./assets/Screenshot_21.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+      <img src="./assets/Screenshot_22.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+     </div>
 
 2. **PSNR Observations**:
    - **20dB**: Both linear and non-linear methods yield similar results due to low noise levels.
@@ -86,6 +95,14 @@
 1. **True Edges and Evaluation**:
    - Ground truth edges ($$\(\theta_{realedge}\)$$) help measure the accuracy of detected edges.
    - Precision, recall, and their average provide quantitative metrics for performance.
+   | Parameters                                    | C-evaluation |
+   |---------------------------------------------- |--------------|
+   | PSNR=20dB, σ=1.3, θ=0.35, linear approach     | 0.853121     |
+   | PSNR=20dB, σ=1.3, θ=0.35, non-linear approach | 0.854772     |
+   | PSNR=15dB, σ=1.6, θ=0.4, linear approach      | 0.837746     |
+   | PSNR=15dB, σ=1.6, θ=0.4, non-linear approach  | 0.846461     |
+   | PSNR=10dB, σ=1.7, θ=0.45, linear approach     | 0.774321     |
+   | PSNR=10dB, σ=1.7, θ=0.45, non-linear approach | 0.807682     |
 
 2. **Analysis**:
    - As noise increases, non-linear methods maintain better scores.
