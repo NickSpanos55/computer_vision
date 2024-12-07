@@ -38,13 +38,13 @@
    - **Linear Approach**:
      - Applies the LoG filter directly to the original image. Since smoothing is integrated into the filter, no prior smoothing is needed.
    <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
-      
       <img src="./assets/Screenshot_8.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+      <img src="./assets/Screenshot_9.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
    </div>
    - **Non-Linear Approach**:
    <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
-      <img src="./assets/Screenshot_9.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
       <img src="./assets/Screenshot_10.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+      <img src="./assets/Screenshot_11.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
    </div>
      - Utilizes erosion and dilation operations on the smoothed image.
      - Difference from linear method: Non-linear filters are more robust to noise.
@@ -52,17 +52,17 @@
    - **Result Comparison**:
      - Non-linear methods display cleaner edges, especially at \(PSNR = 10dB\), as noise has less impact on edge clarity.
      <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
-      <img src="./assets/Screenshot_11.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
       <img src="./assets/Screenshot_12.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
       <img src="./assets/Screenshot_13.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
       <img src="./assets/Screenshot_14.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+      <img src="./assets/Screenshot_15.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
      </div>
 
      <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
-      <img src="./assets/Screenshot_15.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
       <img src="./assets/Screenshot_16.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
       <img src="./assets/Screenshot_17.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
       <img src="./assets/Screenshot_18.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+      <img src="./assets/Screenshot_19.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
      </div>
 ---
 
