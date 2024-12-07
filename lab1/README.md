@@ -96,14 +96,14 @@
    - Ground truth edges ($$\(\theta_{realedge}\)$$) help measure the accuracy of detected edges.
    - Precision, recall, and their average provide quantitative metrics for performance.
 
-| Parameters                                    | C-evaluation |
-|-----------------------------------------------|--------------|
-| PSNR=20dB, σ=1.3, θ=0.35, linear approach     | 0.853121     |
-| PSNR=20dB, σ=1.3, θ=0.35, non-linear approach | 0.854772     |
-| PSNR=15dB, σ=1.6, θ=0.4, linear approach      | 0.837746     |
-| PSNR=15dB, σ=1.6, θ=0.4, non-linear approach  | 0.846461     |
-| PSNR=10dB, σ=1.7, θ=0.45, linear approach     | 0.774321     |
-| PSNR=10dB, σ=1.7, θ=0.45, non-linear approach | 0.807682     |
+   | Parameters                                    | C-evaluation |
+   |-----------------------------------------------|--------------|
+   | PSNR=20dB, σ=1.3, θ=0.35, linear approach     | 0.853121     |
+   | PSNR=20dB, σ=1.3, θ=0.35, non-linear approach | 0.854772     |
+   | PSNR=15dB, σ=1.6, θ=0.4, linear approach      | 0.837746     |
+   | PSNR=15dB, σ=1.6, θ=0.4, non-linear approach  | 0.846461     |
+   | PSNR=10dB, σ=1.7, θ=0.45, linear approach     | 0.774321     |
+   | PSNR=10dB, σ=1.7, θ=0.45, non-linear approach | 0.807682     |
 
 2. **Analysis**:
    - As noise increases, non-linear methods maintain better scores.
