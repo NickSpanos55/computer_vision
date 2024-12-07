@@ -10,6 +10,7 @@
    <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
       <img src="./assets/Screenshot_2.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
    </div>
+   
    - **Observation**: Noise is significantly more apparent in the $$\(10dB\)$$ image, disrupting the clarity of details.
 
 ---
