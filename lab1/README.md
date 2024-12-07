@@ -7,11 +7,9 @@
 
 2. **Noise Addition**:
    - Images for $$\(PSNR = 20dB\)$$ and $$\(PSNR = 10dB\)$$ demonstrate the impact of varying levels of noise.
-   
    <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
       <img src="./assets/Screenshot_2.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
    </div>
-
    - **Observation**: Noise is significantly more apparent in the $$\(10dB\)$$ image, disrupting the clarity of details.
 
 ---
@@ -24,11 +22,11 @@
       <img src="./assets/Screenshot_3.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
       <img src="./assets/Screenshot_4.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
    </div>
-     - **Gaussian**: A central peak, resembling a smooth distribution.
-     - **LoG**: A central minimum with a surrounding positive region (inverted "Mexican hat").
+   - **Gaussian**: A central peak, resembling a smooth distribution.
+   - **LoG**: A central minimum with a surrounding positive region (inverted "Mexican hat").
 
 2. **Smoothing with Gaussian Kernel**:
-   - Images are smoothed to reduce noise, displayed for both $$\(PSNR = 20dB\)$$ and $$\(10dB\)$$.
+    - Images are smoothed to reduce noise, displayed for both $$\(PSNR = 20dB\)$$ and $$\(10dB\)$$.
    <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
       <img src="./assets/Screenshot_5.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
       <img src="./assets/Screenshot_6.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
