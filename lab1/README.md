@@ -41,11 +41,13 @@
       <img src="./assets/Screenshot_8.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
       <img src="./assets/Screenshot_9.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
    </div>
+
    - **Non-Linear Approach**:
    <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
       <img src="./assets/Screenshot_10.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
       <img src="./assets/Screenshot_11.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
    </div>
+   
      - Utilizes erosion and dilation operations on the smoothed image.
      - Difference from linear method: Non-linear filters are more robust to noise.
 
