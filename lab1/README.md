@@ -22,22 +22,23 @@
    - Kernels exhibit:
    <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">    
       <img src="./assets/Screenshot_4.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+      <img src="./assets/Screenshot_5.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
    </div>
    - **Gaussian**: A central peak, resembling a smooth distribution.
    - **LoG**: A central minimum with a surrounding positive region (inverted "Mexican hat").
 
 2. **Smoothing with Gaussian Kernel**:
     - Images are smoothed to reduce noise, displayed for both $$\(PSNR = 20dB\)$$ and $$\(10dB\)$$.
-   <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
-      <img src="./assets/Screenshot_5.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+   <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">     
       <img src="./assets/Screenshot_6.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+      <img src="./assets/Screenshot_7.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
    </div>
 
 3. **Edge Detection Methods**:
    - **Linear Approach**:
      - Applies the LoG filter directly to the original image. Since smoothing is integrated into the filter, no prior smoothing is needed.
    <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
-      <img src="./assets/Screenshot_7.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+      
       <img src="./assets/Screenshot_8.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
    </div>
    - **Non-Linear Approach**:
