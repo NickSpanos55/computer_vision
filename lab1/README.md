@@ -123,7 +123,7 @@
    - Non-linear methods capture more edges on the building's facade and side, while linear methods miss finer details.
    - Trade-offs arise as higher $$\(\sigma\)$$ or $$\(\theta_{edge}\)$$ values excessively smooth or suppress details.
    <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto;">
-      <img src="./assets/Screenshot_25.jpg" alt="YCbCr Color Space Diagram" style="width: 400px; height: 300px;"/>
-      <img src="./assets/Screenshot_26.jpg" alt="YCbCr Color Space Diagram" style="width: 400px; height: 300px;"/>
-      <img src="./assets/Screenshot_27.jpg" alt="YCbCr Color Space Diagram" style="width: 400px; height: 300px;"/>
+      <img src="./assets/Screenshot_25.jpg" alt="YCbCr Color Space Diagram" style="width: 300px; height: 200px;"/>
+      <img src="./assets/Screenshot_26.jpg" alt="YCbCr Color Space Diagram" style="width: 300px; height: 200px;"/>
+      <img src="./assets/Screenshot_27.jpg" alt="YCbCr Color Space Diagram" style="width: 300px; height: 200px;"/>
      </div>
