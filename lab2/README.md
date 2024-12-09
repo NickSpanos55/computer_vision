@@ -4,14 +4,14 @@
 
 To detect skin regions, we initially convert RGB images to the YCbCr color space, retaining only the Cb (chrominance blue) and Cr (chrominance red) components. This step isolates the true color information of the skin while discarding the Y (luminance) component, which varies depending on lighting conditions. This transformation reduces the influence of lighting and emphasizes chromatic consistency in skin tones.
 
-<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
-  <img src="./assets/Screenshot_1.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto;">
+  <img src="./assets/Screenshot_1.jpg" alt="YCbCr Color Space Diagram" style="width: 200px; height: 200px;"/>
 </div>
 
 Next, using the training image, we compute the mean values of the Cb and Cr components and their covariance matrix. For each pixel in the video frames, we calculate its likelihood value using the Gaussian distribution parameterized by the computed statistics. This probabilistic approach effectively identifies skin-like regions in the images, as the Gaussian model captures the variability of skin tones.
 
-<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
-  <img src="./assets/Screenshot_2.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto;">
+  <img src="./assets/Screenshot_2.jpg" alt="YCbCr Color Space Diagram" style="width: 200px; height: 200px;"/>
 </div>
 
 To refine the detection, we apply a thresholding operation. Pixels with a likelihood value greater than 0.23 are retained, producing binary masks highlighting the detected skin regions.
@@ -21,8 +21,8 @@ Following thresholding, morphological operations are applied to clean and struct
 Opening (using a 4x4 pixel kernel): Removes small noise and disconnects unrelated small regions.
 Closing (using a 10x10 pixel kernel): Bridges small gaps and fills holes within detected skin regions.
 
-<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
-  <img src="./assets/Screenshot_3.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto;">
+  <img src="./assets/Screenshot_3.jpg" alt="YCbCr Color Space Diagram" style="width: 200px; height: 200px;"/>
 </div>
 
 Through experimentation, it was observed that kernel sizes significantly affect the separation of face and hands, especially when the hands are close to the face (e.g., for sign language interpreters). The chosen sizes provided optimal segmentation for most scenarios.
@@ -30,14 +30,14 @@ Through experimentation, it was observed that kernel sizes significantly affect 
 Using Python functions like label and np.unique, we identify connected components in the binary masks. From these, the three largest connected components (typically representing the face and both hands) are retained.
 
 
-<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
-  <img src="./assets/Screenshot_4.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto;">
+  <img src="./assets/Screenshot_4.jpg" alt="YCbCr Color Space Diagram" style="width: 200px; height: 200px;"/>
 </div>
 
 Finally, bounding boxes are calculated by enclosing the identified components within rectangles, allowing us to capture the positions of the face and hands effectively.
 
-<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
-  <img src="./assets/Screenshot_5.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto;">
+  <img src="./assets/Screenshot_5.jpg" alt="YCbCr Color Space Diagram" style="width: 200px; height: 200px;"/>
 </div>
 
 ---
@@ -154,10 +154,10 @@ This function processes optical flow vectors $$(\mathbf{d_x}, \mathbf{d_y} \)$$ 
 
 For $$\( \text{threshold} = 0.5 \)$$ (50%), the results were satisfactory.
 
-<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
-  <img src="./assets/Screenshot_6.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
-  <img src="./assets/Screenshot_7.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
-  <img src="./assets/Screenshot_8.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto;">
+  <img src="./assets/Screenshot_6.jpg" alt="YCbCr Color Space Diagram" style="width: 200px; height: 200px;"/>
+  <img src="./assets/Screenshot_7.jpg" alt="YCbCr Color Space Diagram" style="width: 200px; height: 200px;"/>
+  <img src="./assets/Screenshot_8.jpg" alt="YCbCr Color Space Diagram" style="width: 200px; height: 200px;"/>
 </div>
 
 ### **Multiscale Lucas-Kanade**
@@ -183,10 +183,10 @@ To address limitations in large-motion scenarios (e.g., motion > 1-2 pixels), we
 ### Results
 The multiscale Lucas-Kanade significantly outperformed the single-scale version, especially in high-motion areas like hands, where single-scale LK failed.
 
-<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
-  <img src="./assets/Screenshot_9.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
-  <img src="./assets/Screenshot_10.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
-  <img src="./assets/Screenshot_11.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto;">
+  <img src="./assets/Screenshot_9.jpg" alt="YCbCr Color Space Diagram" style="width: 200px; height: 200px;"/>
+  <img src="./assets/Screenshot_10.jpg" alt="YCbCr Color Space Diagram" style="width: 200px; height: 200px;"/>
+  <img src="./assets/Screenshot_11.jpg" alt="YCbCr Color Space Diagram" style="width: 200px; height: 200px;"/>
 </div>
 
 
@@ -220,9 +220,9 @@ After calculating the criteria for both Harris and Gabor detectors, we identify 
 
 #### Visualization Example
 Below is a visualization of the Harris (left) and Gabor (right) criteria for the same frame:
-<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
-  <img src="./assets/Screenshot_12.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
-  <img src="./assets/Screenshot_13.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto;">
+  <img src="./assets/Screenshot_12.jpg" alt="YCbCr Color Space Diagram" style="width: 200px; height: 200px;"/>
+  <img src="./assets/Screenshot_13.jpg" alt="YCbCr Color Space Diagram" style="width: 200px; height: 200px;"/>
 </div>
 
 **Observations**:
@@ -233,9 +233,9 @@ Below is a visualization of the Harris (left) and Gabor (right) criteria for the
 
 #### Comparative Frames
 **Example 1**: Boxing Frames  
-<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
-  <img src="./assets/Screenshot_14.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
-  <img src="./assets/Screenshot_15.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto;">
+  <img src="./assets/Screenshot_14.jpg" alt="YCbCr Color Space Diagram" style="width: 200px; height: 200px;"/>
+  <img src="./assets/Screenshot_15.jpg" alt="YCbCr Color Space Diagram" style="width: 200px; height: 200px;"/>
 </div>
 
 Frames 26 and 27 from the video *person12_boxing_d3_uncomp.avi* show that:
@@ -243,9 +243,9 @@ Frames 26 and 27 from the video *person12_boxing_d3_uncomp.avi* show that:
 - Harris, shown in the second row, fails to detect the motion.
 
 **Example 2**: Running Frames  
-<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
-  <img src="./assets/Screenshot_16.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
-  <img src="./assets/Screenshot_17.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto;">
+  <img src="./assets/Screenshot_16.jpg" alt="YCbCr Color Space Diagram" style="width: 200px; height: 200px;"/>
+  <img src="./assets/Screenshot_17.jpg" alt="YCbCr Color Space Diagram" style="width: 200px; height: 200px;"/>
 </div>
 
 Frames from the video *person01_running_d1_uncomp.avi* demonstrate:
@@ -291,23 +291,23 @@ This methodology highlights the strengths and weaknesses of different detectors 
 
 ## Step 1: Keypoint Detection and Descriptor Computation
 Using the function `sift.detectAndCompute`, we calculate keypoints in each image and compute local descriptors for these points. The identified keypoints on the original images are as follows:
-<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
-  <img src="./assets/Screenshot_18.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
-  <img src="./assets/Screenshot_19.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
-  <img src="./assets/Screenshot_20.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto;">
+  <img src="./assets/Screenshot_18.jpg" alt="YCbCr Color Space Diagram" style="width: 200px; height: 200px;"/>
+  <img src="./assets/Screenshot_19.jpg" alt="YCbCr Color Space Diagram" style="width: 200px; height: 200px;"/>
+  <img src="./assets/Screenshot_20.jpg" alt="YCbCr Color Space Diagram" style="width: 200px; height: 200px;"/>
 </div>
 
-<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
-  <img src="./assets/Screenshot_21.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
-  <img src="./assets/Screenshot_22.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
-  <img src="./assets/Screenshot_23.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto;">
+  <img src="./assets/Screenshot_21.jpg" alt="YCbCr Color Space Diagram" style="width: 200px; height: 200px;"/>
+  <img src="./assets/Screenshot_22.jpg" alt="YCbCr Color Space Diagram" style="width: 200px; height: 200px;"/>
+  <img src="./assets/Screenshot_23.jpg" alt="YCbCr Color Space Diagram" style="width: 200px; height: 200px;"/>
 </div>
 
 ## Step 2: Keypoint Matching
 To match the detected keypoints, we opted for the `cv.FlannBasedMatcher` function. This method offers good results while being significantly faster than exhaustive methods such as `BFMatcher`. For each keypoint in one image, we compute the two closest matches using `knnMatch` based on their descriptors. This matching process between two images results in:
 
-<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
-  <img src="./assets/Screenshot_24.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto;">
+  <img src="./assets/Screenshot_24.jpg" alt="YCbCr Color Space Diagram" style="width: 200px; height: 200px;"/>
 </div>
 
 Although several matches are identified, many are inaccurate. Therefore, in the next step, we retain only the "best" matches based on the ratio being lower than 0.75.
@@ -316,8 +316,8 @@ Although several matches are identified, many are inaccurate. Therefore, in the 
 
 ## Step 3: Filtering Matches
 For each matched keypoint, we calculate two distances: one for the best match and another for the second-best match. We retain only those keypoints where the ratio of these distances is less than 0.75. After applying this filter:
-<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
-  <img src="./assets/Screenshot_25.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto;">
+  <img src="./assets/Screenshot_25.jpg" alt="YCbCr Color Space Diagram" style="width: 200px; height: 200px;"/>
 </div>
 
 We observe that primarily the keypoints present in both images remain, indicating successful matching.
@@ -341,8 +341,8 @@ For example, applying this transformation to `1.png` (left section of the mounta
 
 The image is correctly shifted to align for stitching in the next step.
 
-<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
-  <img src="./assets/Screenshot_26.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+<div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto;">
+  <img src="./assets/Screenshot_26.jpg" alt="YCbCr Color Space Diagram" style="width: 200px; height: 200px;"/>
 </div>
 
 ## Step 6: Image Stitching
