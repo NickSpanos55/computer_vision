@@ -307,7 +307,7 @@ Using the function `sift.detectAndCompute`, we calculate keypoints in each image
 To match the detected keypoints, we opted for the `cv.FlannBasedMatcher` function. This method offers good results while being significantly faster than exhaustive methods such as `BFMatcher`. For each keypoint in one image, we compute the two closest matches using `knnMatch` based on their descriptors. This matching process between two images results in:
 
 <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto;">
-  <img src="./assets/Screenshot_24.jpg" alt="YCbCr Color Space Diagram" style="width: 200px; height: 200px;"/>
+  <img src="./assets/Screenshot_24.jpg" alt="YCbCr Color Space Diagram" style="width: 250px; height: 250px;"/>
 </div>
 
 Although several matches are identified, many are inaccurate. Therefore, in the next step, we retain only the "best" matches based on the ratio being lower than 0.75.
@@ -317,7 +317,7 @@ Although several matches are identified, many are inaccurate. Therefore, in the 
 ## Step 3: Filtering Matches
 For each matched keypoint, we calculate two distances: one for the best match and another for the second-best match. We retain only those keypoints where the ratio of these distances is less than 0.75. After applying this filter:
 <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto;">
-  <img src="./assets/Screenshot_25.jpg" alt="YCbCr Color Space Diagram" style="width: 200px; height: 200px;"/>
+  <img src="./assets/Screenshot_25.jpg" alt="YCbCr Color Space Diagram" style="width: 250px; height: 250px;"/>
 </div>
 
 We observe that primarily the keypoints present in both images remain, indicating successful matching.
@@ -342,7 +342,7 @@ For example, applying this transformation to `1.png` (left section of the mounta
 The image is correctly shifted to align for stitching in the next step.
 
 <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto;">
-  <img src="./assets/Screenshot_26.jpg" alt="YCbCr Color Space Diagram" style="width: 200px; height: 200px;"/>
+  <img src="./assets/Screenshot_26.jpg" alt="YCbCr Color Space Diagram" style="width: 250px; height: 250px;"/>
 </div>
 
 ## Step 6: Image Stitching
