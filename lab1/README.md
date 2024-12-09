@@ -79,12 +79,12 @@
       <img src="./assets/Screenshot_20.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
       <img src="./assets/Screenshot_21.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
      </div>
+     
      - Lower $$\(\theta_{edge}\)$$ retains noise but maintains more detailed edges.
      <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
       <img src="./assets/Screenshot_21.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
       <img src="./assets/Screenshot_22.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
      </div>
-
 2. **PSNR Observations**:
    - **20dB**: Both linear and non-linear methods yield similar results due to low noise levels.
    - **10dB**: Non-linear approaches consistently outperform linear ones in noise resilience.
