@@ -116,10 +116,19 @@
    - For an image like "duomo_edges.jpg," containing fine, closely packed edges, parameter tuning is crucial:
      - Small $$\(\sigma\)$$ and $$\(\theta_{edge}\)$$ values retain as much detail as possible.
      - Larger $$\(\sigma\)$$ and $$\(\theta_{edge}\)$$ values smooth out smaller details, leaving only prominent edges.
+     <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
+      <img src="./assets/Screenshot_23.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+      <img src="./assets/Screenshot_24.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+     </div>
 
 2. **Comparison**:
    - Non-linear methods capture more edges on the building's facade and side, while linear methods miss finer details.
    - Trade-offs arise as higher $$\(\sigma\)$$ or $$\(\theta_{edge}\)$$ values excessively smooth or suppress details.
+   <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin: 0 auto; width: 20%;">
+      <img src="./assets/Screenshot_25.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+      <img src="./assets/Screenshot_26.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+      <img src="./assets/Screenshot_27.jpg" alt="YCbCr Color Space Diagram" style="width: 20%;"/>
+     </div>
 
 ---
 
