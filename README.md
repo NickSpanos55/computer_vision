@@ -33,5 +33,3 @@ Explore the following projects included in this repository:
 - **Algorithms:** Classic filters, HOG, SIFT, Machine Learning classifiers, Deep Neural Networks  
 
 ---
-
-Feel free to explore, contribute, or provide feedback on these projects! 😊
